@@ -42,6 +42,7 @@ type Config struct {
 	Links    LinkRegistry   `name:"-"`
 	MQTT     MQTTConfig     `name:"mqtt" description:"MQTT configuration"`
 	Webhooks WebhooksConfig `name:"webhooks" description:"Webhooks configuration"`
+	Cloud    CloudConfig    `name:"cloud" description:"Cloud messaging configuration"`
 }
 
 var errLinkMode = errors.DefineInvalidArgument("link_mode", "invalid link mode `{value}`")
@@ -76,6 +77,12 @@ type WebhooksConfig struct {
 	Timeout   time.Duration       `name:"timeout" description:"Wait timeout of the target to process the request"`
 	QueueSize int                 `name:"queue-size" description:"Number of requests to queue"`
 	Workers   int                 `name:"workers" description:"Number of workers to process requests"`
+}
+
+// CloudConfig contains go-cloud configuration of the Application Server.
+type CloudConfig struct {
+	PublishURL   string `name:"publish-url" description:"URL for the topic to send uplinks"`
+	SubscribeURL string `name:"subscribe-url" description:"URL for the subscription to receiving downlink operations"`
 }
 
 // NewWebhooks returns a new web.Webhooks based on the configuration.
